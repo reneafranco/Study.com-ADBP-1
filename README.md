@@ -72,4 +72,68 @@ photographs: Holds information about photographs, linking them to their respecti
 Prompt 3 - Alter Tables
 
 
+ALTER TABLE users MODIFY userid INT NOT NULL;
+This will change the field userid in the table users so that this field cannot have NULL values. You will have to modify your own code to match the requirements of the following:
+
+Create a new SQL statement and modify the following fields so that they are not null.
+
+Table	Field(s)
+locations	type, description, lng, lat
+users	name, username
+photograph	photoid, locationid
+
+
+-- Disable safe update mode
+SET SQL_SAFE_UPDATES = 0;
+
+-- Update existing NULL values with appropriate defaults
+UPDATE locations SET type = 0 WHERE type IS NULL;
+UPDATE locations SET description = '' WHERE description IS NULL;
+UPDATE locations SET lng = 0.0 WHERE lng IS NULL;
+UPDATE locations SET lat = 0.0 WHERE lat IS NULL;
+
+-- Alter the columns to NOT NULL
+ALTER TABLE locations MODIFY COLUMN type INT NOT NULL;
+ALTER TABLE locations MODIFY COLUMN description VARCHAR(255) NOT NULL;
+ALTER TABLE locations MODIFY COLUMN lng REAL NOT NULL;
+ALTER TABLE locations MODIFY COLUMN lat REAL NOT NULL;
+
+ALTER TABLE users MODIFY COLUMN name VARCHAR(255) NOT NULL;
+ALTER TABLE users MODIFY COLUMN username VARCHAR(20) NOT NULL;
+
+ALTER TABLE photographs MODIFY COLUMN photoid INT NOT NULL;
+ALTER TABLE photographs MODIFY COLUMN locationid INT NOT NULL;
+
+-- Re-enable safe update mode
+SET SQL_SAFE_UPDATES = 1;
+
+
+ALTER TABLE locations ALTER COLUMN type SET NOT NULL;
+ALTER TABLE locations ALTER COLUMN description SET NOT NULL;
+ALTER TABLE locations ALTER COLUMN lng SET NOT NULL;
+ALTER TABLE locations ALTER COLUMN lat SET NOT NULL;
+
+ALTER TABLE users ALTER COLUMN name SET NOT NULL;
+ALTER TABLE users ALTER COLUMN username SET NOT NULL;
+
+ALTER TABLE photographs ALTER COLUMN photoid SET NOT NULL;
+ALTER TABLE photographs ALTER COLUMN locationid SET NOT NULL;
+
+
+Prompt 4 - Create Index
+
+CREATE UNIQUE INDEX id ON users (userid);
+
+This statement creates an index called id where each KEY will be unique (different from any other). The table users will be used and the index will be based on the first named userid.
+
+Now that the index is created on the users table, add an index for the photograph table. Be sure to use an index identifier that is unique but meaningful (e.g., not xddkrer).
+
+CREATE INDEX idx_locationid ON photographs (locationid);
+
+Prompt 5 - Enter Data
+
+INSERT INTO users (name, username, address, city, state, zip) VALUES 
+('Sam Smarf', 'ssmarf', '356 A Street', 'Beefy', 'PA', 19943),
+('Wendy Grog', 'wgrog', '900 Star Street', 'Mary', 'MD', 21340),
+('Joe Jogger', 'jjogger', '183713 N North Street', 'Norther', 'WV', 51423);
 
