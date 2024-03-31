@@ -170,3 +170,29 @@ SELECT count(*) from users;
 Execute this command and paste the results under Prompt 6.
 
 SELECT COUNT(*) FROM users;
+
+
+Prompt 7 - Add Column
+In the photograph table we accounted for the id of the location and the id of the photo in the photo library, but we did not include the location of the photographer. We need to add a field to this table to allow this data to be stored. The field will be called userid.
+
+We used the following statement to make this modification to the table. Use the ALTER command with the following syntax:
+
+ALTER TABLE {table name} ADD COLUMN {column} {data type} AFTER {column}
+
+Paste the SQL code in the Word document under Prompt 7.
+
+Next, Inspect the new table, clicking on the Columns tab. Take a screen capture, and place it in the word file that will contain all of your screen captures. Label this screen capture Prompt 7.
+
+
+Prompt 8 - Issue with New Column
+The new column is still incorrect. Can you say how? Hint: How did we modify our columns earlier to ensure data integrity? What data integrity issues will arise if we do not update the column?
+
+Take screen print(s) of any updates you make, and type an answer (100 to 200 words) into the word file containing your screen captures and label this answer Prompt 8.
+
+The issue with the new column userid in the photographs table is that it lacks constraints to ensure data integrity. Specifically, it lacks a FOREIGN KEY constraint, which would enforce referential integrity between the userid column in the photographs table and the userid column in the users table.
+
+Without this constraint, data integrity issues may arise, such as the possibility of inserting userid values into the photographs table that do not correspond to existing userid values in the users table. This could lead to inconsistencies and orphaned records.
+
+To address this, we need to add a FOREIGN KEY constraint to the userid column in the photographs table, referencing the userid column in the users table. This constraint will ensure that only valid userid values from the users table can be inserted into the photographs table.
+
+After adding the FOREIGN KEY constraint, it's crucial to inspect the table to confirm that the constraint has been applied correctly.
