@@ -69,7 +69,7 @@ locations: Stores information about the locations, whether it's for a person or 
 photographs: Holds information about photographs, linking them to their respective locations. It has fields for photoid (unique identifier for each photograph) and locationid (which refers to the itemid in the locations table).
 
 
-
+Prompt 3 - Alter Tables
 
 
 
