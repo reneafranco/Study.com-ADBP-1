@@ -130,10 +130,43 @@ Now that the index is created on the users table, add an index for the photograp
 
 CREATE INDEX idx_locationid ON photographs (locationid);
 
+
 Prompt 5 - Enter Data
 
+Now let's enter some data into the database.
+
+We will enter data for the following four individuals.
+
+Userid	name	username	address	city	state	zip
+1	Bonnie Buntcake	bbunt	6709 Wonder Street	Wonderbread	OH	46106
+2	Sam Smarf	ssmarf	356 A Street	Beefy	PA	19943
+3	Wendy Grog	wgrog	900 Star Street	Mary	MD	21340
+4	Joe Jogger	jjogger	183713 N North Street	Norther	WV	51423
+To enter data into a table you can use the INSERT statement.
+
+INSERT INTO table_name (column1, column2, …)
+
+INSERT INTO users VALUES ('Bonnie Buntcake', 'bbunt', '6709 Wonder Street', 'Wonderbread', 'OH', 46105);
+
+
+truncate users;
+
 INSERT INTO users (name, username, address, city, state, zip) VALUES 
+('Bonnie Buntcake', 'bbunt', '6709 Wonder Street', 'Wonderbread', 'OH', 46105),
 ('Sam Smarf', 'ssmarf', '356 A Street', 'Beefy', 'PA', 19943),
 ('Wendy Grog', 'wgrog', '900 Star Street', 'Mary', 'MD', 21340),
 ('Joe Jogger', 'jjogger', '183713 N North Street', 'Norther', 'WV', 51423);
 
+SELECT * FROM users;
+
+
+
+
+Prompt 6 - Count Rows
+If you want to determine the number of rows in a table you can enter the query
+
+SELECT count(*) from users;
+
+Execute this command and paste the results under Prompt 6.
+
+SELECT COUNT(*) FROM users;
