@@ -55,21 +55,21 @@ CREATE TABLE users (
     address VARCHAR(255),
     city VARCHAR(255),
     state CHAR(2),
-    zip INTEGER,
+    zip INT(5)
     CONSTRAINT unique_username UNIQUE (username)
 ); 
 
 CREATE TABLE locations (
-    itemid SERIAL PRIMARY KEY,
-    type INTEGER,
+    itemid INT AUTO_INCREMENT PRIMARY KEY,
+    type INT,
     description VARCHAR(255),
     lng REAL,
     lat REAL
 );
 
 CREATE TABLE photographs (
-    photoid SERIAL PRIMARY KEY,
-    locationid INTEGER
+    photoid INT AUTO_INCREMENT PRIMARY KEY,
+    locationid INT
 );
 
 
@@ -141,6 +141,11 @@ Now that the index is created on the users table, add an index for the photograp
 
 CREATE INDEX idx_locationid ON photographs (locationid);
 
+CREATE UNIQUE INDEX idx_userid ON users (userid);
+CREATE INDEX idx_photoid_locationid ON photographs (photoid, locationid);
+
+
+
 
 Prompt 5 - Enter Data
 
@@ -194,6 +199,9 @@ Paste the SQL code in the Word document under Prompt 7.
 
 Next, Inspect the new table, clicking on the Columns tab. Take a screen capture, and place it in the word file that will contain all of your screen captures. Label this screen capture Prompt 7.
 
+ALTER TABLE photographs ADD COLUMN userid INT AFTER locationid;
+
+
 
 Prompt 8 - Issue with New Column
 The new column is still incorrect. Can you say how? Hint: How did we modify our columns earlier to ensure data integrity? What data integrity issues will arise if we do not update the column?
@@ -211,6 +219,10 @@ After adding the FOREIGN KEY constraint, it's crucial to inspect the table to co
 
 ALTER TABLE photographs ADD CONSTRAINT fk_userid FOREIGN KEY (userid) REFERENCES users(userid);
 
+ALTER TABLE photographs 
+ADD CONSTRAINT fk_userid 
+FOREIGN KEY (userid) 
+REFERENCES users(userid);
 
 Prompt 9 - Location and Photograph Table Updates
 Next we will define some data for the remaining tables. The locations table and the photographs table still require some data to be defined for them.
@@ -264,3 +276,36 @@ First, let's see who is taking pictures. We can do this by selecting the names f
 SELECT name FROM users;
 
 Execute these command(s). When the new screen appears, capture it and place it in the word file that will contain all of your screen captures. Label this screen capture Prompt 10.
+
+
+Prompt 11 - Who's Taking Pictures?
+Now let's see who's actually taken a photo by comparing the list of users to those who have an entry in the photographs table.
+
+SELECT name FROM users, photographs WHERE {where condition}
+
+Complete the WHERE statement, ensuring that you are returning users that have taken pictures (which field(s) are related between the tables?
+
+Execute these command. When the new screen appears, capture it and place it in the word file that will contain all of your screen captures. Be sure to copy the SQL statement as well. Label this screen capture Prompt 11.
+
+
+SELECT name FROM users, photographs WHERE users.userid = photographs.userid;
+
+SELECT DISTINCT users.name
+FROM users
+INNER JOIN photographs ON users.userid = photographs.userid;
+
+
+
+Prompt 12 - Unique Names
+Notice that this query has told us that Bonnie Buntcake, Wendy Grog, and Joe Jogger all have photos in the photographs table. In the case of Bonnie Buntcake though, she has taken two photos.
+
+Supposing we only want names that are unique, i.e., we are not interested in duplicates - only those who have taken photos. We can add the DISTINCT keyword to the SELECT statement.
+
+Update the SQL statement to only show distinct names.
+
+Execute these command. When the new screen appears, capture it and place it in the word file that will contain all of your screen captures. Be sure to copy the SQL statement as well. Label this screen capture Prompt 12.
+
+
+SELECT DISTINCT users.name 
+FROM users 
+JOIN photographs ON users.userid = photographs.userid;
