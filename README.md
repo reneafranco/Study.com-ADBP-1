@@ -38,7 +38,7 @@ Prompt 1 - Create the Schema/Database
 
 
     CREATE TABLE users (
-    userid SERIAL PRIMARY KEY,
+    userid SERIAL PRIMARY KEY,// serial es especificamenete para PostgreSQL
     name VARCHAR(255),
     username VARCHAR(20),
     address VARCHAR(255),
@@ -47,6 +47,17 @@ Prompt 1 - Create the Schema/Database
     zip INTEGER,
     CONSTRAINT unique_username UNIQUE (username)
 );
+
+CREATE TABLE users (
+    userid INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255),
+    username VARCHAR(20),
+    address VARCHAR(255),
+    city VARCHAR(255),
+    state CHAR(2),
+    zip INTEGER,
+    CONSTRAINT unique_username UNIQUE (username)
+); 
 
 CREATE TABLE locations (
     itemid SERIAL PRIMARY KEY,
@@ -196,3 +207,60 @@ Without this constraint, data integrity issues may arise, such as the possibilit
 To address this, we need to add a FOREIGN KEY constraint to the userid column in the photographs table, referencing the userid column in the users table. This constraint will ensure that only valid userid values from the users table can be inserted into the photographs table.
 
 After adding the FOREIGN KEY constraint, it's crucial to inspect the table to confirm that the constraint has been applied correctly.
+
+
+ALTER TABLE photographs ADD CONSTRAINT fk_userid FOREIGN KEY (userid) REFERENCES users(userid);
+
+
+Prompt 9 - Location and Photograph Table Updates
+Next we will define some data for the remaining tables. The locations table and the photographs table still require some data to be defined for them.
+
+The locations table will contain the following data.
+
+itemid	type	description	lng	lat
+N/A, will be auto-numbered	1	Independence Hall	794.35	651.43
+N/A, will be auto-numbered	2	6709 Wonder Street	323.41	412.22
+N/A, will be auto-numbered	1	Sunrise	221.45	132.43
+N/A, will be auto-numbered	2	356 A Street	123.32	222.43
+N/A, will be auto-numbered	1	Mountains	34.12	87.99
+N/A, will be auto-numbered	2	900 Star Street	1071.9	206.45
+N/A, will be auto-numbered	1	Moonrise	816.2	111.2
+N/A, will be auto-numbered	2	183714 N North Street	176.11	11.176
+The photograph table will contain the following data. Be sure the locationid entered matches a location that you created earlier!
+
+photoid	locationid	userid
+1	?	1
+2	?	1
+3	?	3
+4	?	4
+Execute the proper SQL command(s). Paste both the SQL commands and screen captures of each table under Prompt 9.
+
+
+INSERT INTO locations (type, description, lng, lat) VALUES
+(1, 'Independence Hall', 794.35, 651.43),
+(2, '6709 Wonder Street', 323.41, 412.22),
+(1, 'Sunrise', 221.45, 132.43),
+(2, '356 A Street', 123.32, 222.43),
+(1, 'Mountains', 34.12, 87.99),
+(2, '900 Star Street', 1071.9, 206.45),
+(1, 'Moonrise', 816.2, 111.2),
+(2, '183714 N North Street', 176.11, 11.176);
+
+
+SELECT * FROM locations;
+
+INSERT INTO photographs (locationid, userid) VALUES
+(1, 1),
+(2, 1),
+(3, 3),
+(4, 4);
+
+
+Prompt 10 - Users
+Now you've created and populated the three tables that make up your database. The next step is to see what we can find out from this database.
+
+First, let's see who is taking pictures. We can do this by selecting the names from the users table.
+
+SELECT name FROM users;
+
+Execute these command(s). When the new screen appears, capture it and place it in the word file that will contain all of your screen captures. Label this screen capture Prompt 10.
