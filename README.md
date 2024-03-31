@@ -28,3 +28,48 @@ Prompt 1 - Create the Schema/Database
       description - alphanumeric
       lng, real
       lat, real
+
+
+    Name this table photographs.
+
+    photoid - numeric, integer
+    locationid - numeric , integer
+
+
+
+    CREATE TABLE users (
+    userid SERIAL PRIMARY KEY,
+    name VARCHAR(255),
+    username VARCHAR(20),
+    address VARCHAR(255),
+    city VARCHAR(255),
+    state CHAR(2),
+    zip INTEGER,
+    CONSTRAINT unique_username UNIQUE (username)
+);
+
+CREATE TABLE locations (
+    itemid SERIAL PRIMARY KEY,
+    type INTEGER,
+    description VARCHAR(255),
+    lng REAL,
+    lat REAL
+);
+
+CREATE TABLE photographs (
+    photoid SERIAL PRIMARY KEY,
+    locationid INTEGER
+);
+
+
+users: Contains information about users of the database. It has fields for userid, name, username, address, city, state, and zip. The userid is a primary key and auto-incremented. The username is also set to be unique.
+
+locations: Stores information about the locations, whether it's for a person or a photograph. It includes fields for itemid, type, description, lng (longitude), and lat (latitude). Itemid is a primary key and auto-incremented.
+
+photographs: Holds information about photographs, linking them to their respective locations. It has fields for photoid (unique identifier for each photograph) and locationid (which refers to the itemid in the locations table).
+
+
+
+
+
+
