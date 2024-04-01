@@ -142,7 +142,7 @@ Now that the index is created on the users table, add an index for the photograp
 CREATE INDEX idx_locationid ON photographs (locationid);
 
 CREATE UNIQUE INDEX idx_userid ON users (userid);
-CREATE INDEX idx_photoid_locationid ON photographs (photoid, locationid);
+CREATE INDEX idx_locationid ON photographs (locationid);
 
 
 
