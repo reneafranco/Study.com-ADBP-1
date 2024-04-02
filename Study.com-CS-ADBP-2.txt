@@ -1,0 +1,31 @@
+Step 1: Identify Functional and Transitive Dependencies
+Functional dependencies describe the relationships between attributes in a table, while transitive dependencies occur when one non-key attribute is functionally dependent on another non-key attribute. Let's analyze the functional and transitive dependencies in the given table:
+
+Functional Dependencies:
+Employee ID -> Employee Last Name, Employee First Name, Street Address, City, State, ZIP Code, Department, Manager ID, Position, Salary
+
+Employee ID uniquely determines all other attributes in the table. Each employee has a unique ID associated with their information.
+Department -> Manager ID
+
+The department determines who the manager is, implying that for each department, there is only one manager.
+Manager ID -> Employee Last Name, Employee First Name
+
+The manager ID determines the name of the manager. This implies that each manager has a unique ID associated with their name.
+Transitive Dependency:
+There doesn't seem to be any explicit transitive dependency in this table.
+
+Step 2: Identify a Primary Key
+From the functional dependencies identified, it's clear that Employee ID serves as the primary key since it uniquely identifies each employee record.
+
+Step 3: Explain Why Table is Not 3NF
+The table is not in the Third Normal Form (3NF) due to the following reasons:
+
+Transitive Dependencies: Although there are no transitive dependencies within this table, the dependency between Department and Manager ID introduces a partial dependency, which violates the rules of 3NF. If we consider a scenario where an employee may manage multiple departments, or a department may have multiple managers, it becomes apparent that this table's design leads to potential anomalies.
+
+Partial Dependency: The fact that the Manager ID is functionally dependent on Department implies a partial dependency, as Department is not a part of the primary key.
+
+Step 4: Explain the Current Normalization Status
+The current normalization status of the table is likely in the Second Normal Form (2NF). It meets the requirements of 1NF as each cell contains atomic values, and it also meets the requirements of 2NF as there are no partial dependencies. However, it fails to meet the requirements of 3NF due to the presence of a transitive dependency.
+
+Step 5: Create the Tables in MySQL
+SQL statements for creating new tables in MySQL will be provided in the Word document along with screen prints of the final results.
