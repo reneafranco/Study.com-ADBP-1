@@ -55,7 +55,7 @@ CREATE TABLE users (
     address VARCHAR(255),
     city VARCHAR(255),
     state CHAR(2),
-    zip INT(5)
+    zip INT(5),
     CONSTRAINT unique_username UNIQUE (username)
 ); 
 
