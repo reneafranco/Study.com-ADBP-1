@@ -21,4 +21,59 @@ In the provided database table, various fields exhibit dependencies on the prima
 
 
 
+2. Identify a Primary Key
+
+"Employee ID" field. This field uniquely identifies each employee within the organization, ensuring that each record in the table can be uniquely identified. As such, "Employee ID" serves as the primary key for the current data set.
+
+
+3. Explain Why Table is Not 3NF
+
+To determine whether the provided table is in Third Normal Form (3NF), it's essential to revisit the fundamental principles of normalization and assess the table's structure against these principles. 
+Third Normal Form requires that a table be in Second Normal Form (2NF) and that no non-prime attribute be transitively dependent on the primary key. 
+
+Second Normal Form requires that every non-prime attribute be fully functionally dependent on the entire primary key. In our case, the primary key is the "Employee ID" field. 
+Third Normal Form prohibits transitive dependencies, meaning that no non-prime attribute should be transitively dependent on the primary key through another non-prime attribute.
+
+    ---- the Employee ID becomes functionally dependent on the employee's name, and the name becomes dependent on the Employee ID. This violates 3NF because a non-prime attribute (Employee ID) is transitively dependent on another non-prime attribute (Employee Last Name, Employee First Name).
+
+    -----The Manager ID field determines the Employee ID of the employees managed by a specific manager. This implies a transitive dependency because the Employee ID is indirectly determined by the Manager ID and this violates the principles of 3NF.
+
+it's evident that the table does not satisfy the requirements of Third Normal Form due to the presence of transitive dependencies. Specifically, the transitive dependencies between the Employee Last Name, Employee First Name, and Employee ID, as well as between the Manager ID and Employee ID, prevent the table from being in 3NF. To achieve 3NF, these transitive dependencies need to be resolved by restructuring the table to eliminate indirect dependencies between non-prime attributes. This can be achieved through decomposition, where the table is split into smaller tables, each representing a single entity or concept without transitive dependencies.
+
+
+4. Explain the Current Normalization Status
+
+  The current normalization status of the table is Second Normal Form (2NF) level. Second Normal Form requires that a table meets the criteria of First Normal Form (1NF) and that all non-prime attributes are fully functionally dependent on the entire primary key. In this table, the primary key is the "Employee ID" field, and all non-key attributes, including Employee Last Name, Employee First Name, Street Address, City, State, ZIP Code, Department, Manager ID, Position, and Salary, seem to be functionally dependent on the Employee ID. This means that each non-key attribute is uniquely determined by the Employee ID, fulfilling the requirements of 2NF.
+
+
+
+In this table, the primary key is the "Employee ID" field, which serves as a unique identifier for each employee in the organization.analysis of the table structure, it becomes evident that all non-key attributes, such as Employee Last Name, Employee First Name, Street Address, City, State, ZIP Code, Department, Manager ID, Position, and Salary, are functionally dependent on the Employee ID. This means that for each distinct Employee ID value, all other attributes have a direct and unique correspondence. For example, knowing the Employee ID allows us to determine the specific Employee Last Name, First Name, Address, Department, Manager ID, Position, and Salary associated with that employee. This comprehensive dependency on the Employee ID ensures that each record in the table is uniquely identified and organized based on this primary key, thereby meeting the requirements of Second Normal Form (2NF).
+
+by satisfying the criteria of 2NF, the table ensures that data redundancy is minimized and data integrity is maintained. Each attribute directly contributes to defining an employee's information, and there are no composite keys or partial dependencies present. 
+
+5. Create the Tables in MySQL
+
+CREATE TABLE Employee (
+    EmployeeID INT PRIMARY KEY,
+    LastName VARCHAR(255),
+    FirstName VARCHAR(255),
+    StreetAddress VARCHAR(255),
+    City VARCHAR(255),
+    State VARCHAR(255),
+    ZIPCode VARCHAR(10),
+    DepartmentID INT,
+    PositionID INT,
+    Salary DECIMAL(10, 2),
+    FOREIGN KEY (DepartmentID) REFERENCES Department(DepartmentID),
+    FOREIGN KEY (PositionID) REFERENCES Position(PositionID)
+);
+
+
+CREATE TABLE ManagerialRelationship (
+    ManagerID INT,
+    EmployeeID INT,
+    PRIMARY KEY (ManagerID, EmployeeID),
+    FOREIGN KEY (ManagerID) REFERENCES Employee(EmployeeID),
+    FOREIGN KEY (EmployeeID) REFERENCES Employee(EmployeeID)
+);
 
